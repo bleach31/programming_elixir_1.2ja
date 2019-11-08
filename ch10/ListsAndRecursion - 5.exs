@@ -30,7 +30,7 @@ defmodule MyEnum do
     end
 
     def split(list,num) when num < 0 do
-        _split(Enum.reverse(list),num*(-1),[])
+        _split(list,max(0,length(list) + num),[])
     end
 
     defp _split([head|tail],num,prev)  when num > 0 do
@@ -40,7 +40,6 @@ defmodule MyEnum do
     defp _split(list,0,prev), do: {Enum.reverse(prev),list}
     
     defp _split([],_num,prev), do: {Enum.reverse(prev),[]}
-
 
 end
 
@@ -54,7 +53,7 @@ list = Enum.to_list 1..5
 IO.inspect MyEnum.split(list, 3)
 IO.inspect MyEnum.split(list, 0)
 IO.inspect MyEnum.split(list, 7)
-IO.inspect MyEnum.split(list, -2)
+IO.inspect MyEnum.split(list, -10)
 
 
 

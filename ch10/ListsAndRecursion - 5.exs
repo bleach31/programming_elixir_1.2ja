@@ -36,11 +36,22 @@ defmodule MyEnum do
     defp _split([head|tail],num,prev)  when num > 0 do
         _split(tail,num-1,[head|prev])
     end
-
     defp _split(list,0,prev), do: {Enum.reverse(prev),list}
-    
     defp _split([],_num,prev), do: {Enum.reverse(prev),[]}
+################################################
+    def take(list,num) when num >=0 do
+        _take(list,num,[])
+    end
 
+    def take(list,num) when num < 0 do
+        _take(Enum.reverse(list),-num,[])
+    end
+
+    defp _take([head|tail],num,prev) when num >0 do
+        _take(tail,num-1,[head|prev])
+    end
+    defp _take(list,0,prev), do: Enum.reverse(prev)
+    defp _take([],_num,prev), do: Enum.reverse(prev)
 end
 
 list = Enum.to_list 1..5
@@ -50,10 +61,17 @@ list = Enum.to_list 1..5
 #require Integer
 #IO.inspect MyEnum.filter(list, &Integer.is_even/1)
 
-IO.inspect MyEnum.split(list, 3)
-IO.inspect MyEnum.split(list, 0)
-IO.inspect MyEnum.split(list, 7)
-IO.inspect MyEnum.split(list, -10)
+# IO.inspect MyEnum.split(list, 3)
+# IO.inspect MyEnum.split(list, 0)
+# IO.inspect MyEnum.split(list, 7)
+# IO.inspect MyEnum.split(list, -1)
+# IO.inspect MyEnum.split(list, -10)
+
+IO.inspect MyEnum.take(list, 3)
+IO.inspect MyEnum.take(list, 0)
+IO.inspect MyEnum.take(list, 7)
+IO.inspect MyEnum.take(list, -1)
+IO.inspect MyEnum.take(list, -10)
 
 
 

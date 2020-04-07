@@ -6,6 +6,8 @@
 # We make no guarantees that this code is fit for any purpose.
 # Visit http://www.pragmaticprogrammer.com/titles/elixir12 for more book information.
 #---
+import Issues.TableFormatter, only: [ print_table_for_columns: 2 ]
+
 defmodule Issues.CLI do
 
   @default_count 4
@@ -16,7 +18,7 @@ defmodule Issues.CLI do
   table of the last _n_ issues in a github project
   """
 
-  def run(argv) do
+  def main(argv) do
     argv 
     |> parse_args
     |> process
@@ -56,7 +58,8 @@ defmodule Issues.CLI do
     |> convert_to_list_of_maps
     |> sort_into_ascending_order
     |> Enum.take(count)
-    |> disply_issue_list
+#    |> disply_issue_list
+    |> print_table_for_columns(["number","created_at","title"])
   end
 
 

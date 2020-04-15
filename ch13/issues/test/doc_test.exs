@@ -6,10 +6,7 @@
 # We make no guarantees that this code is fit for any purpose.
 # Visit http://www.pragmaticprogrammer.com/titles/elixir12 for more book information.
 #---
-use Mix.Config
-config :issues, github_url: "https://api.github.com"
-
-config :logger,
-  compile_time_purge_matching: [
-    [level_lower_than: :info]
-  ]
+defmodule DocTest do
+  use ExUnit.Case
+  doctest Issues.TableFormatter
+end

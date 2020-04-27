@@ -8,11 +8,17 @@ defmodule MultiProcess do
   end
 
   def create_processes do
-    p1 = spawn(MultiProcess, :send_back, [])
-    p2 = spawn(MultiProcess, :send_back, [])
+    for x <- 1..100 do
+      p = spawn(MultiProcess, :send_back, [])
+      greet p, Integer.to_string(x)
+      IO.puts("okutteruyo------")
+    end
 
-    greet p1, "fred"
-    greet p2, "betty"
+    #p1 = spawn(MultiProcess, :send_back, [])
+    #p2 = spawn(MultiProcess, :send_back, [])
+    #greet p1, "fred"
+    #greet p2, "betty"
+
   end
 
   def greet(pid, token) do
@@ -27,3 +33,4 @@ defmodule MultiProcess do
   end
 
 end
+

@@ -12,9 +12,9 @@ defmodule Parallel do
     collection
     |> Enum.map(fn (elem) ->
          spawn_link fn -> (send me, { self(), fun.(elem) }) end
-       end)     # [1 2 3 4 5...]
-    |> Enum.map(fn (pid) -> # 1 , 2 ,3 
-         receive do { _pid, result } -> result end
-       end)
+       end)     # pidのlistになる　[101, 105, 102]
+    |> Enum.map(fn (pid) -> #  
+         receive do { ^pid, result } -> result end
+       end) # 結果のリスト
   end
 end

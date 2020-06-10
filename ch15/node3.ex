@@ -30,8 +30,8 @@ defmodule Ticker do
     end
 
     Enum.each clients, fn client ->
-        IO.puts "tick"
         :timer.sleep(@interval)
+        IO.puts "tick"
         send client, { :tick } 
     end
 

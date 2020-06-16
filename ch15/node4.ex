@@ -10,7 +10,7 @@ defmodule Client do
   @interval 2000   # 2 seconds
   
   def start do
-    IO.puts "My name is #{inspect self()}"
+    IO.puts "My name is #{inspect node()} #{inspect self()}c("
     # startを引く
     case :global.whereis_name(:last) do
       :undefined -> # 未登録（最初の一人）
@@ -29,21 +29,26 @@ defmodule Client do
         :global.re_register_name(:last, self()) 
 
         IO.puts "new last is #{inspect :global.whereis_name(:last)}"
-        # 自分のnextを変数lastが指すプロセスにして、待ちを開始
-        receiver(last)        
+        # 自分のnextを受け取り、待ちを開始
+        receive do
+          { :registed, next } ->
+            receiver(next)
+        end        
     end
   end
 
   def receiver(next) do
     receive do
       { :tick } -> #
-        IO.puts "tock in client #{inspect self()}" # 自分の名前をだす
+        IO.puts "tock in client #{inspect node()} #{inspect self()}" # 自分の名前をだす
         
         :timer.sleep(@interval)
         send next, { :tick } 
         receiver(next)
       { :regist, new_next } ->  # 新規登録
-        # 自分のnextをnew_nextにする
+        # 送信先を投げる
+        send new_next, {:registed, next } 
+        # 自分の送信先(next)をnew_nextにする
         receiver(new_next)
     end
   end

@@ -53,13 +53,9 @@ defmodule Stack.Server do
   # System.halt(n)はnが正なら、どんなnでも正常終了扱いとなり、terminateは呼ばれない
     # nの代わりに:abortでも正常終了してくれる。terminateは呼ばれない
   # 直接呼んだときはterminateの内容がただ実行されるだけ、プロセスはしなない
-  def terminate(_reason,state) do
-    #######################################################
-    #######################################################
-    IO.inspect "-----------reason-----------"
-    IO.inspect reason
-    IO.inspect "-----------state-----------"
-    IO.inspect state
+  def terminate(_reason,{list,stash_pid}) do
+    #　動作確認のためdeadをいれて保存する
+    Sequence.Stash.save_value stash_pid, ["dead" | list]
   end
 end
 

@@ -11,7 +11,7 @@ defmodule Otpservers2.Application do
     #children = [
       # Starts a worker by calling: Otpservers2.Worker.start_link(arg)
       # {Otpservers2.Worker, arg}
-    ]
+    #]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
